@@ -11,7 +11,7 @@ end
 
 
 def available_moves(board)
-  board.select{|k,v| v.strip.empty? }.keys
+  board.select{|_k,v| v.strip.empty?}.keys
 end
 
 
@@ -40,7 +40,7 @@ def predict_move(board, player_key, winning_move)
   board_position
 end
 
-def isWinner?(board, player_key, winning_move)
+def is_winner?(board, player_key, winning_move)
   count = 0
   winning_move.each do |k,v|
     count = 0
@@ -85,7 +85,7 @@ def draw_instruction_board
 end
 
 
-def comptuer_move(board, move)
+def computer_move(board, move)
   if move == 0
     remainging_moves = available_moves(board)
     move = remainging_moves.sample
@@ -93,6 +93,12 @@ def comptuer_move(board, move)
   board[move] = "o"
 end
 
+
+def show_tie_game
+  puts
+  puts "It's a tie!"
+  tie_game = true
+end
 
 #Start the game!
 game_board = initialize_board
@@ -105,28 +111,28 @@ begin
     run_once = false
   end
 
-  if(!available_moves(game_board).empty?)
+  if(available_moves(game_board).any?)
     players_move(game_board) 
-    if(isWinner?(game_board, "x",winning_moves))
+    if(is_winner?(game_board, "x",winning_moves))
       puts "Congratulations! You win!"
       winner = true
-    elsif isWinner?(game_board, "o",winning_moves)
-      puts "Computer wins! Better luck next time."
-      winner = true
-    else
+    elsif available_moves(game_board).any? 
       move = predict_move(game_board,"x", winning_moves) 
-      comptuer_move(game_board, move)  
+      computer_move(game_board, move)   
+      if is_winner?(game_board, "o",winning_moves)
+        puts "Congratulations! You win!"
+        winner = true
+      end 
+    else
+      tie_game = show_tie_game
     end
   else
-    puts
-    puts "It's a tie!"
-    tie_game = true
+    tie_game = show_tie_game
   end
   
   draw_board(game_board)
 
 end until winner || tie_game
-
 
 
 
