@@ -120,7 +120,7 @@ begin
       move = predict_move(game_board,"x", winning_moves) 
       computer_move(game_board, move)   
       if is_winner?(game_board, "o",winning_moves)
-        puts "Congratulations! You win!"
+        puts "Computer won! Better luck next time."
         winner = true
       end 
     else
