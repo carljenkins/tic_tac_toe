@@ -16,7 +16,7 @@ end
 
 
 def predict_move(board, player_key, winning_move)
-  board_posotion = 0
+  board_position= 0
 
   moves = winning_move.values  
   moves.each_with_index do |item,idx|
@@ -31,13 +31,13 @@ def predict_move(board, player_key, winning_move)
         potential_move = sqr
       end  
       if ind == 2 && count == 2
-        board_posotion = potential_move
+        board_position = potential_move
         break
       end 
     end
     break if count == 2
   end 
-  board_posotion
+  board_position
 end
 
 def isWinner?(board, player_key, winning_move)
